@@ -1,45 +1,54 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { StatusBar, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { store, persistor } from './src/store';
+import FeedScreen from './src/screens/FeedScreen';
+import DetailsScreen from './src/screens/DetailsScreen';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const Stack = createNativeStackNavigator();
 
+const App = () => {
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaView style={styles.bg}>
+          <StatusBar barStyle="light-content" backgroundColor="#000" />
+          <NavigationContainer>
+            <Stack.Navigator 
+              screenOptions={{
+                headerStyle: { backgroundColor: '#111' },
+                headerTintColor: '#fff',
+                headerShadowVisible: false,
+              }}
+            >
+              <Stack.Screen 
+                name="Feed" 
+                component={FeedScreen} 
+                options={{ title: 'Archives' }} 
+              />
+              <Stack.Screen 
+                name="Details" 
+                component={DetailsScreen} 
+                options={{ title: 'Data Entry' }} 
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
+  bg: {
     flex: 1,
-  },
+    backgroundColor: '#000',
+  }
 });
 
 export default App;
