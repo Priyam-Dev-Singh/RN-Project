@@ -6,7 +6,7 @@ import { fetchFeedData } from '../api/apiClient';
 
 const FeedScreen = (props: any) => {
   const dispatch = useAppDispatch();
-  const { navigation }: any = props; // Pass props to FeedScreen component: const FeedScreen = (props: any) => {
+  const { navigation }: any = props; 
   const { listData, currentPage, isLoading, searchTxt } = useAppSelector((state) => state.feed);
 
   const loadData = useCallback(async (isRefresh = false) => {
@@ -27,7 +27,7 @@ const FeedScreen = (props: any) => {
     if (listData.length === 0) {
       loadData(true);
     }
-  }, []);
+  }, [listData.length, loadData]);
 
  
   useEffect(() => {
@@ -35,7 +35,7 @@ const FeedScreen = (props: any) => {
       if (searchTxt !== '') loadData(true);
     }, 500);
     return () => clearTimeout(delay);
-  }, [searchTxt]);
+  }, [searchTxt, loadData]);
 
   const handleLoadMore = () => {
     if (!isLoading) {
