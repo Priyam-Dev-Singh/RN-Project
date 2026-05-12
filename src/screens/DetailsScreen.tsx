@@ -7,6 +7,7 @@ const DetailsScreen = ({ route }: any) => {
 
   return (
     <ScrollView style={styles.bg}>
+      
       <View style={styles.content}>
         <Text style={styles.title}>{item.title}</Text>
         
