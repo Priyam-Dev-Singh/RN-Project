@@ -24,8 +24,9 @@ const App = () => {
                 headerStyle: {backgroundColor: '#111'},
                 headerTintColor: '#fff'
               }}>
-
+                {/* This is the main screen that loads the list of books*/}
               <Stack.Screen name="Feed" component={FeedScreen} options={{title: 'Archives'}} />
+               {/* This is the details screen that shows the details of the book clicked like about, published date etc */}
               <Stack.Screen 
                 name="Details" 
                 component={DetailsScreen} 

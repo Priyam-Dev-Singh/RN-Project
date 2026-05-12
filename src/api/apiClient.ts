@@ -2,7 +2,7 @@ const BASE_URL = 'https://openlibrary.org/search.json';
 
 export const fetchFeedData = async (query: string, page: number) => {
   try {
-   
+   //for applying search query directly as the api request
     const q = query ? encodeURIComponent(query) : 'stoic';
     const url = `${BASE_URL}?q=${q}&page=${page}&limit=15`;
     

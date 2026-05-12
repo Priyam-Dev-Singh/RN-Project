@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 const DetailsScreen = ({ route }: any) => {
   // Extracting the data passed from the FeedScreen
-  const { item } = route.params;
+  const { item } = route.params; //sent from the feedscreen as navigation parameter
 
   return (
     <ScrollView style={styles.bg}>

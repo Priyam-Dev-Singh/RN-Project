@@ -5,16 +5,17 @@ import { setLoading, setListData, nextPage, setSearchTxt, setErrorMsg } from '..
 import { fetchFeedData } from '../api/apiClient';
 
 const FeedScreen = (props: any) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch(); // used to update the redux states like isLoading current page etc
   const { navigation }: any = props; 
-  const { listData, currentPage, isLoading, searchTxt } = useAppSelector((state) => state.feed);
+  const { listData, currentPage, isLoading, searchTxt } = useAppSelector((state) => state.feed);// refreshes the screen and the feed whenever the redux state changes
 
   const loadData = useCallback(async (isRefresh = false) => {
     if (isLoading) return;
     dispatch(setLoading(true));
 
     const data = await fetchFeedData(searchTxt, isRefresh ? 1 : currentPage);
-    
+    // isRefresh acts as the trigger to load the new page.
+    //loadData(true) clears the current page and loads page 1
     if (data) {
       dispatch(setListData({ data, refresh: isRefresh }));
     } else {
@@ -33,7 +34,7 @@ const FeedScreen = (props: any) => {
   useEffect(() => {
     const delay = setTimeout(() => {
       if (searchTxt !== '') loadData(true);
-    }, 500);
+    }, 500);// sets a delay after the each serach letter so the api call doesnt happen simultaneously only after the user has typed the full word
     return () => clearTimeout(delay);
   }, [searchTxt, loadData]);
 
@@ -48,7 +49,7 @@ const FeedScreen = (props: any) => {
     <TouchableOpacity 
       style={styles.card} 
       activeOpacity={0.7}
-      onPress={() => navigation.navigate('Details', { item })}
+      onPress={() => navigation.navigate('Details', { item })}// navigates to the Details screne by passing the parameter as item
     >
       <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
       <Text style={styles.subtext}>
@@ -64,7 +65,7 @@ const FeedScreen = (props: any) => {
           placeholder="Search archives..."
           placeholderTextColor="#666"
           value={searchTxt}
-          onChangeText={(text) => dispatch(setSearchTxt(text))}
+          onChangeText={(text) => dispatch(setSearchTxt(text))}// the global search state is updated
         />
       </View>
 
@@ -72,8 +73,8 @@ const FeedScreen = (props: any) => {
         data={listData}
         keyExtractor={(item, index) => `${item.key}-${index}`}
         renderItem={renderItem}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.5}
+        onEndReached={handleLoadMore}// when end is reached load the next page
+        onEndReachedThreshold={0.5} // when 50% of the screen is crossed onEndReached is triggered
         ListFooterComponent={isLoading ? <ActivityIndicator color="#fff" style={styles.loader} /> : null}
       />
     </View>

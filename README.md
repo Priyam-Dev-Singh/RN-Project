@@ -22,6 +22,14 @@ The system interfaces with the Open Library API to output a search feed. The arc
 * **Navigation:** React Navigation
 * **Data Source:** Open Library API
 
+**Note from Dev**:
+The main Layout is defined in App.tsx file check that to see the screens structure
+The src folder is the MAIN folder where the logic and screen are coded
+src-Store holds the logic for Redux store and hooks
+src-Screen has the screen code. FeedScreen is the Home screen
+src-api has the logic for handling search requests.
+
+
 ## Execution
 
 1. Install dependencies:
@@ -32,3 +40,5 @@ The system interfaces with the Open Library API to output a search feed. The arc
 
 3. Compile the Android shell:
    `npm run android`
+
+
